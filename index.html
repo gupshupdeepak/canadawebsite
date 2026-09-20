@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Company Name | Home Building &amp; Renovation</title>
+<meta name="description" content="Custom homes, renovations and remodelling. Replace this with your own description.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add("js");</script>
+<style>
+  :root {
+    --lake: #1d4e5f;
+    --deep: #143743;
+    --slate: #26323a;
+    --timber: #b98b57;
+    --mist: #dce4e6;
+    --paper: #f7f8f6;
+    --white: #ffffff;
+    --radius: 6px;
+    --max: 1120px;
+    --ease: cubic-bezier(.2, .7, .2, 1);
+    --head: "Bricolage Grotesque", Georgia, "Times New Roman", serif;
+    --body: "Manrope", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+  body { margin: 0; font-family: var(--body); color: var(--slate); background: var(--paper); line-height: 1.65; font-size: 1.0625rem; overflow-x: hidden; }
+  img, svg, video { max-width: 100%; display: block; }
+  a { color: var(--lake); }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--timber); outline-offset: 2px; }
+  h1, h2, h3 { font-family: var(--head); line-height: 1.12; margin: 0 0 .6em; letter-spacing: -.01em; }
+  h1 { font-size: clamp(2.6rem, 6vw, 4.6rem); }
+  h2 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); }
+  h3 { font-size: 1.3rem; }
+  p { margin: 0 0 1em; max-width: 62ch; }
+  .wrap { width: min(100% - 2.5rem, var(--max)); margin-inline: auto; }
+  .section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
+  .btn { display: inline-block; padding: .85em 1.6em; border-radius: var(--radius); font-weight: 700; text-decoration: none; border: 2px solid var(--lake); background: var(--lake); color: var(--white); cursor: pointer; transition: background .25s, color .25s, border-color .25s, transform .25s var(--ease); }
+  .btn:hover { background: var(--slate); border-color: var(--slate); transform: translateY(-2px); }
+  .btn.ghost { background: transparent; color: var(--lake); }
+  .btn.ghost:hover { background: var(--lake); color: var(--white); border-color: var(--lake); }
+
+  /* ---------- Scroll reveal ---------- */
+  .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--d, 0s); }
+  .js .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- Header: transparent on hero, solid after scroll, hides on scroll down ---------- */
+  header.site { position: fixed; inset: 0 0 auto 0; z-index: 20; transition: background .3s, transform .4s var(--ease), box-shadow .3s; color: var(--white); }
+  header.site.solid { background: var(--paper); color: var(--slate); box-shadow: 0 1px 0 var(--mist); }
+  header.site.hide { transform: translateY(-100%); }
+  header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 68px; }
+  .brand { font-family: var(--head); font-weight: 700; font-size: 1.35rem; color: inherit; text-decoration: none; }
+  nav ul { display: flex; gap: 1.6rem; list-style: none; margin: 0; padding: 0; }
+  nav a { color: inherit; text-decoration: none; font-weight: 500; background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat; padding-bottom: 3px; transition: background-size .35s var(--ease); }
+  nav a:hover, nav a.active { background-size: 100% 2px; }
+  .menu-btn { display: none; background: none; border: 0; cursor: pointer; padding: .5rem; }
+  .menu-btn span { display: block; width: 24px; height: 2px; background: currentColor; margin: 5px 0; transition: transform .3s var(--ease), opacity .3s; }
+  .menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+  .menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* ---------- Hero ---------- */
+  #hero { position: relative; min-height: 100svh; background: var(--deep); color: var(--white); display: flex; align-items: center; overflow: hidden; padding: 7rem 0 4rem; }
+  /* Background layer. To use a real looping video, add a <video class="bg-media" autoplay muted loop playsinline src="videos/hero.mp4"></video> inside .hero-bg */
+  .hero-bg { position: absolute; inset: 0; }
+  .hero-bg::before { content: ""; position: absolute; inset: -8%; background: radial-gradient(60% 50% at 75% 30%, #2c6b80 0%, transparent 70%), radial-gradient(50% 50% at 15% 85%, #0f2c37 0%, transparent 70%), var(--deep); animation: drift 22s ease-in-out infinite alternate; }
+  .bg-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
+  .hero-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,55,67,.85), rgba(20,55,67,.25)); }
+  @keyframes drift { from { transform: scale(1) translate3d(0, 0, 0); } to { transform: scale(1.14) translate3d(-3%, 2%, 0); } }
+  #hero .grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; gap: 2.5rem; align-items: center; }
+  .line { display: block; overflow: hidden; padding-bottom: .08em; }
+  .line > span { display: block; animation: rise 1s var(--ease) both; animation-delay: calc(.15s * var(--i)); }
+  @keyframes rise { from { transform: translateY(110%); } to { transform: none; } }
+  .fade-in { animation: fade 1s var(--ease) both; animation-delay: var(--d, .6s); }
+  @keyframes fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  #hero p.lead { font-size: 1.2rem; color: #d7e6ea; }
+  .badges { display: flex; gap: 1.4rem; flex-wrap: wrap; margin: 0 0 1.6rem; padding: 0; list-style: none; font-weight: 700; font-size: .95rem; }
+  .badges li::before { content: ""; display: inline-block; width: .55em; height: .55em; margin-right: .5em; border-radius: 50%; background: var(--timber); }
+  .actions { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1.6rem; }
+  #hero .btn { background: var(--timber); border-color: var(--timber); color: var(--slate); }
+  #hero .btn:hover { background: var(--white); border-color: var(--white); }
+  #hero .btn.ghost { background: transparent; color: var(--white); border-color: var(--white); }
+  #hero .btn.ghost:hover { background: var(--white); color: var(--lake); }
+  /* House line drawing that draws itself on load */
+  .elevation { width: 100%; height: auto; }
+  .elevation .draw > * { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.6s var(--ease) forwards; animation-delay: calc(.9s + .07s * var(--n, 0)); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .scroll-cue { position: absolute; z-index: 1; left: 50%; bottom: 1.4rem; width: 22px; height: 36px; border: 2px solid rgba(255,255,255,.6); border-radius: 12px; transform: translateX(-50%); }
+  .scroll-cue::after { content: ""; position: absolute; left: 50%; top: 6px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: var(--white); animation: cue 1.8s ease-in-out infinite; }
+  @keyframes cue { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
+
+  /* ---------- Intro strip ---------- */
+  #intro { padding: clamp(3rem, 6vw, 5rem) 0; }
+  #intro h2 { max-width: 20ch; }
+
+  /* ---------- Services: hover/click list with preview panel ---------- */
+  #services { background: var(--white); }
+  .svc { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: start; margin-top: 2rem; }
+  .svc-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--slate); }
+  .svc-btn { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--mist); padding: 1.3rem 0; cursor: pointer; display: grid; gap: .2rem; position: relative; transition: padding-left .4s var(--ease), color .3s; }
+  .svc-btn h3 { margin: 0; transition: color .3s; }
+  .svc-btn span { color: #55656e; }
+  .svc-btn::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 3px; width: 0; background: var(--timber); transition: width .5s var(--ease); }
+  .svc-btn[aria-expanded="true"] { padding-left: 1.1rem; }
+  .svc-btn[aria-expanded="true"] h3 { color: var(--lake); }
+  .svc-btn[aria-expanded="true"]::after { width: 100%; }
+  .svc-preview { position: sticky; top: 92px; border-radius: var(--radius); overflow: hidden; background: var(--mist); aspect-ratio: 4 / 5; }
+  .svc-preview .layer { position: absolute; inset: 0; clip-path: inset(100% 0 0 0); transition: clip-path .7s var(--ease); }
+  .svc-preview .layer.on { clip-path: inset(0); }
+  .svc-preview .layer img { width: 100%; height: 100%; object-fit: cover; }
+  .svc-foot { position: absolute; left: 0; right: 0; bottom: 0; padding: 1rem 1.2rem; background: rgba(38,50,58,.88); color: var(--white); display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+  .svc-foot a { color: var(--white); font-weight: 700; }
+  .svc-close { display: none; position: absolute; top: .7rem; right: .7rem; background: var(--white); border: 0; border-radius: var(--radius); padding: .4rem .8rem; cursor: pointer; font-weight: 700; z-index: 2; }
+
+  /* Placeholder tones: delete these once you use real <img> tags */
+  .ph { width: 100%; height: 100%; }
+  .ph.a { background: linear-gradient(160deg, #9db7bf, #1d4e5f); }
+  .ph.b { background: linear-gradient(160deg, #e2cba8, #b98b57); }
+  .ph.c { background: linear-gradient(160deg, #c9d3d6, #5f7a85); }
+  .ph.d { background: linear-gradient(160deg, #8fa9a0, #2f5a4e); }
+  .ph.e { background: linear-gradient(160deg, #d8d2c6, #8a7d68); }
+  .ph.f { background: linear-gradient(160deg, #b5c4cb, #26323a); }
+
+  /* ---------- Gallery: horizontal snap track ---------- */
+  .gal-head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; flex-wrap: wrap; }
+  .arrows { display: flex; gap: .6rem; margin-bottom: 1rem; }
+  .arrows button { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--lake); background: transparent; cursor: pointer; font-size: 1.2rem; color: var(--lake); transition: background .25s, color .25s; }
+  .arrows button:hover { background: var(--lake); color: var(--white); }
+  .track { display: flex; gap: 1.2rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 1rem max(1.25rem, calc((100vw - var(--max)) / 2)); scrollbar-width: thin; }
+  .card { flex: 0 0 min(78vw, 420px); scroll-snap-align: start; margin: 0; position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4 / 5; background: var(--mist); }
+  .card > .ph, .card > img { transition: transform 1s var(--ease); }
+  .card:hover > .ph, .card:hover > img { transform: scale(1.07); }
+  .card figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.2rem; color: var(--white); background: linear-gradient(transparent, rgba(20,55,67,.92)); transform: translateY(38%); transition: transform .5s var(--ease); }
+  .card:hover figcaption, .card:focus-within figcaption { transform: none; }
+  .card figcaption small { display: block; opacity: .85; }
+  .card figcaption h3 { margin: 0 0 .1em; }
+
+  /* ---------- About ---------- */
+  #about { background: var(--white); }
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .facts { list-style: none; margin: 0; padding: 0; border-left: 4px solid var(--timber); }
+  .facts li { padding: .9rem 0 .9rem 1.4rem; border-bottom: 1px solid var(--mist); }
+  .facts li:last-child { border-bottom: 0; }
+  .facts strong { display: block; font-family: var(--head); font-size: 1.9rem; color: var(--lake); }
+  .expertise { position: relative; margin-top: 4rem; border-radius: var(--radius); overflow: hidden; color: var(--white); min-height: 380px; display: grid; align-items: center; }
+  .expertise .pbg { position: absolute; inset: -15% 0; background: linear-gradient(120deg, #143743, #2c6b80 60%, #b98b57); will-change: transform; }
+  .expertise .in { position: relative; padding: clamp(2rem, 5vw, 4rem); display: flex; gap: 2rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
+  .expertise .in > div { max-width: 46ch; }
+  .expertise .btn { background: var(--timber); border-color: var(--timber); color: var(--slate); }
+  .expertise .btn:hover { background: var(--white); border-color: var(--white); }
+  .seal { width: 150px; height: 150px; animation: spin 18s linear infinite; flex: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  /* Testimonials */
+  .reviews { margin-top: 4rem; }
+  .slides { display: grid; }
+  .slide { grid-area: 1 / 1; opacity: 0; transform: translateX(30px); transition: opacity .7s var(--ease), transform .7s var(--ease); pointer-events: none; }
+  .slide.on { opacity: 1; transform: none; pointer-events: auto; }
+  .slide blockquote { margin: 0 0 1rem; font-family: var(--head); font-size: clamp(1.25rem, 2.4vw, 1.7rem); line-height: 1.35; max-width: 42ch; }
+  .dots { display: flex; gap: .5rem; margin-top: 1.4rem; }
+  .dots button { width: 34px; height: 6px; border: 0; border-radius: 3px; background: var(--mist); cursor: pointer; padding: 0; position: relative; overflow: hidden; }
+  .dots button.on::after { content: ""; position: absolute; inset: 0; background: var(--lake); transform-origin: left; animation: fill var(--slide-ms, 6s) linear forwards; }
+  .paused .dots button.on::after { animation-play-state: paused; }
+  @keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+  /* ---------- Contact ---------- */
+  #contact { background: var(--slate); color: var(--white); }
+  #contact a { color: #cfe3e8; }
+  #contact h2.big { font-size: clamp(2.2rem, 5.2vw, 4rem); max-width: 16ch; }
+  #contact .two { grid-template-columns: .9fr 1.1fr; margin-top: 2.5rem; }
+  address { font-style: normal; }
+  form { display: grid; gap: 1rem; }
+  label { display: grid; gap: .35rem; font-weight: 500; }
+  input, textarea, select { font: inherit; padding: .75em .9em; border-radius: var(--radius); border: 1px solid #6c7d87; background: var(--white); color: var(--slate); width: 100%; transition: border-color .25s, box-shadow .25s; }
+  input:focus, textarea:focus, select:focus { border-color: var(--timber); box-shadow: 0 0 0 3px rgba(185,139,87,.35); outline: none; }
+  textarea { min-height: 140px; resize: vertical; }
+  #contact .btn { background: var(--timber); border-color: var(--timber); color: var(--slate); justify-self: start; }
+  #contact .btn:hover { background: var(--white); border-color: var(--white); }
+  .hp { position: absolute; left: -9999px; }
+  /* FAQ accordion */
+  .faq { margin-top: 4rem; border-top: 1px solid #4a5a64; }
+  .faq h3 { margin: 0; }
+  .q { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid #4a5a64; padding: 1.1rem 0; cursor: pointer; display: flex; justify-content: space-between; gap: 1rem; font-family: var(--head); font-size: 1.15rem; color: var(--white); }
+  .q::after { content: "+"; font-size: 1.5rem; line-height: 1; transition: transform .4s var(--ease); }
+  .q[aria-expanded="true"]::after { transform: rotate(45deg); }
+  .a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s var(--ease); }
+  .a > div { overflow: hidden; }
+  .a p { padding: 1rem 0 0; color: #cfdadf; }
+  .q[aria-expanded="true"] + .a { grid-template-rows: 1fr; }
+
+  footer { padding: 1.6rem 0; font-size: .95rem; background: var(--deep); color: #c5d6db; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px) {
+    .menu-btn { display: block; }
+    nav { position: fixed; inset: 0 0 auto 0; top: 68px; background: var(--paper); color: var(--slate); max-height: 0; overflow: hidden; transition: max-height .45s var(--ease); }
+    nav.open { max-height: 320px; box-shadow: 0 8px 20px rgba(0,0,0,.08); }
+    nav ul { flex-direction: column; gap: 0; padding: .5rem 1.25rem 1rem; }
+    nav li a { display: inline-block; padding: .7rem 0; }
+    #hero .grid, .two, #contact .two { grid-template-columns: 1fr; }
+    .svc { grid-template-columns: 1fr; }
+    .svc-preview { display: none; position: relative; top: 0; }
+    .svc-preview.open { display: block; }
+    .svc-close { display: block; }
+    .elevation { max-width: 420px; }
+  }
+
+  /* ---------- Reduced motion ---------- */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
+    .js .reveal { opacity: 1; transform: none; }
+    .elevation .draw > * { stroke-dashoffset: 0; }
+    .card figcaption { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site" id="top-bar">
+  <div class="wrap">
+    <a class="brand" href="#hero">Your Company Name</a>
+    <button class="menu-btn" aria-label="Open main menu" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span></button>
+    <nav id="nav" aria-label="Main">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section id="hero" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true">
+    <!-- Optional looping video: <video class="bg-media" autoplay muted loop playsinline src="videos/hero.mp4"></video> -->
+  </div>
+  <div class="wrap grid">
+    <div>
+      <h1 id="hero-title">
+        <span class="line" style="--i:0"><span>Homes built to last,</span></span>
+        <span class="line" style="--i:1"><span>and to be lived in.</span></span>
+      </h1>
+      <p class="lead fade-in" style="--d:.55s">New builds, renovations and remodels, planned and delivered by one local team. Replace this line with your own promise.</p>
+      <ul class="badges fade-in" style="--d:.75s">
+        <li>Licensed &amp; insured</li>
+        <li>5-star reviews</li>
+      </ul>
+      <div class="actions fade-in" style="--d:.95s">
+        <a class="btn" href="#contact">Request a quote</a>
+        <a class="btn ghost" href="tel:+10000000000">(000) 000-0000</a>
+      </div>
+    </div>
+
+    <svg class="elevation" viewBox="0 0 520 360" role="img" aria-label="Line drawing of a house">
+      <g class="draw" fill="none" stroke="#d7e6ea" stroke-width="2" stroke-linejoin="round" stroke-linecap="round">
+        <path pathLength="1" style="--n:0"  d="M10 330H510"/>
+        <path pathLength="1" style="--n:1"  d="M60 330V170H300V330"/>
+        <path pathLength="1" style="--n:2"  d="M40 176L180 70L320 176"/>
+        <path pathLength="1" style="--n:3"  d="M300 330V210H470V330"/>
+        <path pathLength="1" style="--n:4"  d="M290 216L385 150L480 216"/>
+        <rect pathLength="1" style="--n:5"  x="88" y="200" width="56" height="60"/>
+        <path pathLength="1" style="--n:6"  d="M116 200V260M88 230H144"/>
+        <rect pathLength="1" style="--n:7"  x="216" y="200" width="56" height="60"/>
+        <path pathLength="1" style="--n:8"  d="M244 200V260M216 230H272"/>
+        <rect pathLength="1" style="--n:9"  x="150" y="262" width="52" height="68"/>
+        <rect pathLength="1" style="--n:10" x="330" y="240" width="110" height="50"/>
+        <path pathLength="1" style="--n:11" d="M385 240V290"/>
+        <rect pathLength="1" style="--n:12" x="236" y="96" width="34" height="50"/>
+        <circle pathLength="1" style="--n:13" cx="180" cy="130" r="14"/>
+      </g>
+      <g class="draw" fill="none" stroke="#b98b57" stroke-width="2" stroke-linecap="round">
+        <path pathLength="1" style="--n:15" d="M60 345H470M60 339V351M300 339V351M470 339V351"/>
+      </g>
+    </svg>
+  </div>
+  <div class="scroll-cue" aria-hidden="true"></div>
+</section>
+
+<!-- ================= INTRO ================= -->
+<section id="intro">
+  <div class="wrap">
+    <h2 class="reveal">Your home is the place you build your life around.</h2>
+    <p class="reveal" style="--d:.1s">Write a short introduction here: who you work with, how projects start, and what happens from the first call to the final walkthrough.</p>
+    <a class="btn ghost reveal" style="--d:.2s" href="#contact">Start your project</a>
+  </div>
+</section>
+
+<!-- ================= SERVICES ================= -->
+<section id="services" class="section" aria-labelledby="services-title">
+  <div class="wrap">
+    <h2 id="services-title" class="reveal">What we do</h2>
+    <p class="reveal" style="--d:.1s">Hover or tap a service to preview it. Edit the six items to match what you actually offer.</p>
+
+    <div class="svc reveal" style="--d:.15s">
+      <ul class="svc-list" id="svc-list">
+        <li><button class="svc-btn" data-title="New home construction" aria-expanded="true"><h3>New home construction</h3><span>From foundation to finish, built to your plans.</span></button></li>
+        <li><button class="svc-btn" data-title="Whole-home renovations" aria-expanded="false"><h3>Whole-home renovations</h3><span>Layouts, structure and finishes reworked as one project.</span></button></li>
+        <li><button class="svc-btn" data-title="Kitchens and bathrooms" aria-expanded="false"><h3>Kitchens and bathrooms</h3><span>Cabinetry, tile, plumbing and lighting by one crew.</span></button></li>
+        <li><button class="svc-btn" data-title="Basement finishing" aria-expanded="false"><h3>Basement finishing</h3><span>Bedrooms, offices or a rental suite.</span></button></li>
+        <li><button class="svc-btn" data-title="Additions and decks" aria-expanded="false"><h3>Additions and decks</h3><span>Extra rooms, second storeys and outdoor living.</span></button></li>
+        <li><button class="svc-btn" data-title="Custom millwork" aria-expanded="false"><h3>Custom millwork</h3><span>Built-ins, wall panelling and storage.</span></button></li>
+      </ul>
+
+      <div class="svc-preview" id="svc-preview" aria-live="polite">
+        <button class="svc-close" type="button">Close</button>
+        <!-- Replace each .ph with <img src="images/service-1.jpg" alt="..."> -->
+        <div class="layer on"><div class="ph a"></div></div>
+        <div class="layer"><div class="ph b"></div></div>
+        <div class="layer"><div class="ph c"></div></div>
+        <div class="layer"><div class="ph d"></div></div>
+        <div class="layer"><div class="ph e"></div></div>
+        <div class="layer"><div class="ph f"></div></div>
+        <div class="svc-foot"><strong id="svc-title">New home construction</strong><a href="#contact">Ask about this</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= GALLERY ================= -->
+<section id="gallery" class="section" aria-labelledby="gallery-title" style="padding-bottom:clamp(3rem,6vw,5rem)">
+  <div class="wrap gal-head">
+    <div>
+      <h2 id="gallery-title" class="reveal">Selected work</h2>
+      <p class="reveal" style="--d:.1s">Swap each placeholder for a photo you own: <code>&lt;img src="images/kitchen.jpg" alt="..." loading="lazy"&gt;</code></p>
+    </div>
+    <div class="arrows">
+      <button type="button" id="prev" aria-label="Previous project">&larr;</button>
+      <button type="button" id="next" aria-label="Next project">&rarr;</button>
+    </div>
+  </div>
+  <div class="track" id="track" tabindex="0" aria-label="Project gallery">
+    <figure class="card"><div class="ph a"></div><figcaption><small>City name</small><h3>Front elevation</h3></figcaption></figure>
+    <figure class="card"><div class="ph b"></div><figcaption><small>City name</small><h3>Kitchen remodel</h3></figcaption></figure>
+    <figure class="card"><div class="ph c"></div><figcaption><small>City name</small><h3>Spa bathroom</h3></figcaption></figure>
+    <figure class="card"><div class="ph d"></div><figcaption><small>City name</small><h3>Basement suite</h3></figcaption></figure>
+    <figure class="card"><div class="ph e"></div><figcaption><small>City name</small><h3>Built-in millwork</h3></figcaption></figure>
+    <figure class="card"><div class="ph f"></div><figcaption><small>City name</small><h3>Rear addition</h3></figcaption></figure>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about" class="section" aria-labelledby="about-title">
+  <div class="wrap">
+    <div class="two">
+      <div>
+        <h2 id="about-title" class="reveal">About us</h2>
+        <p class="reveal" style="--d:.1s">Write two or three short paragraphs about who you are, how long you have been building and how you work with clients. Keep it plain and specific.</p>
+        <p class="reveal" style="--d:.2s">Mention licensing, insurance, warranty and the areas you serve, since those are the first questions homeowners ask.</p>
+      </div>
+      <!-- Numbers count up when scrolled into view. Change data-count to your real figures. -->
+      <ul class="facts reveal" style="--d:.15s">
+        <li><strong><span data-count="15">0</span>+</strong>years in business</li>
+        <li><strong><span data-count="250">0</span>+</strong>projects completed</li>
+        <li><strong><span data-count="100">0</span>%</strong>licensed and insured</li>
+      </ul>
+    </div>
+
+    <div class="expertise reveal">
+      <div class="pbg" id="pbg"></div>
+      <div class="in">
+        <div>
+          <h3>Our expertise</h3>
+          <p>Describe what sets your team apart: structural work, sourcing, finish carpentry, or how you manage trades.</p>
+          <a class="btn" href="#contact">Request a quote</a>
+        </div>
+        <svg class="seal" viewBox="0 0 200 200" role="img" aria-label="Licensed and insured seal">
+          <defs><path id="circ" d="M100 100 m-78 0 a78 78 0 1 1 156 0 a78 78 0 1 1 -156 0"/></defs>
+          <circle cx="100" cy="100" r="96" fill="none" stroke="#fff" stroke-width="2"/>
+          <text font-family="Manrope, sans-serif" font-size="15" font-weight="700" letter-spacing="3" fill="#fff"><textPath href="#circ">LICENSED · INSURED · YOUR COMPANY · </textPath></text>
+          <path d="M70 118V92l30-24 30 24v26z" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="reviews reveal" id="reviews" aria-roledescription="carousel" aria-label="Client reviews">
+      <h3>What clients say</h3>
+      <div class="slides">
+        <!-- Sample text only. Replace with real reviews you have permission to publish. -->
+        <div class="slide on"><blockquote>&ldquo;Sample review: the team was on time, kept the site clean and finished the kitchen when they said they would.&rdquo;</blockquote><strong>Client name</strong><br>Kitchen renovation</div>
+        <div class="slide"><blockquote>&ldquo;Sample review: clear pricing from the start and no surprises at the end of the basement project.&rdquo;</blockquote><strong>Client name</strong><br>Basement finishing</div>
+        <div class="slide"><blockquote>&ldquo;Sample review: helpful with design choices and easy to reach whenever we had a question.&rdquo;</blockquote><strong>Client name</strong><br>Bathroom renovation</div>
+      </div>
+      <div class="dots" role="tablist" aria-label="Choose review">
+        <button class="on" role="tab" aria-label="Review 1"></button>
+        <button role="tab" aria-label="Review 2"></button>
+        <button role="tab" aria-label="Review 3"></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="section" aria-labelledby="contact-title">
+  <div class="wrap">
+    <h2 id="contact-title" class="big reveal">Let&rsquo;s build your next home project.</h2>
+    <div class="two">
+      <div class="reveal" style="--d:.1s">
+        <p>Tell us about your project and we will reply within one business day.</p>
+        <address>
+          <p><strong>Phone</strong><br><a href="tel:+10000000000">(000) 000-0000</a></p>
+          <p><strong>Email</strong><br><a href="mailto:info@example.com">info@example.com</a></p>
+          <p><strong>Address</strong><br>123 Example Street<br>City, Province A1A 1A1</p>
+          <p><strong>Hours</strong><br>Mon to Fri, 8:00 to 17:00</p>
+        </address>
+      </div>
+
+      <!-- Replace the action with your form endpoint (Formspree, Web3Forms, a Cloudflare Pages Function, etc.) -->
+      <form class="reveal" style="--d:.2s" action="https://formspree.io/f/your-form-id" method="POST">
+        <label>Name <input type="text" name="name" autocomplete="name" required></label>
+        <label>Email <input type="email" name="email" autocomplete="email" required></label>
+        <label>Phone <input type="tel" name="phone" autocomplete="tel"></label>
+        <label>Project type
+          <select name="project">
+            <option>New build</option>
+            <option>Renovation</option>
+            <option>Kitchen or bathroom</option>
+            <option>Basement</option>
+            <option>Addition or deck</option>
+            <option>Other</option>
+          </select>
+        </label>
+        <label>Message <textarea name="message" required></textarea></label>
+        <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <button class="btn" type="submit">Send message</button>
+      </form>
+    </div>
+
+    <div class="faq reveal" id="faq">
+      <h3 class="q-title" style="position:absolute;left:-9999px">Common questions</h3>
+      <h3><button class="q" aria-expanded="false" aria-controls="a1" id="q1">How long does a renovation take?</button></h3>
+      <div class="a" id="a1" role="region" aria-labelledby="q1"><div><p>Sample answer. Give a realistic range by project type and explain what affects the schedule.</p></div></div>
+      <h3><button class="q" aria-expanded="false" aria-controls="a2" id="q2">Are you licensed and insured?</button></h3>
+      <div class="a" id="a2" role="region" aria-labelledby="q2"><div><p>Sample answer. Add your licence and insurance details.</p></div></div>
+      <h3><button class="q" aria-expanded="false" aria-controls="a3" id="q3">Do you handle permits?</button></h3>
+      <div class="a" id="a3" role="region" aria-labelledby="q3"><div><p>Sample answer. Explain who applies for permits and books inspections.</p></div></div>
+      <h3><button class="q" aria-expanded="false" aria-controls="a4" id="q4">How do quotes work?</button></h3>
+      <div class="a" id="a4" role="region" aria-labelledby="q4"><div><p>Sample answer. Describe your estimate process and what is included.</p></div></div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">&copy; <span id="year">2026</span> Your Company Name. All rights reserved.</div>
+</footer>
+
+<script>
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  $("#year").textContent = new Date().getFullYear();
+
+  /* Header: solid after scroll, hide on scroll down, show on scroll up */
+  var bar = $("#top-bar"), lastY = 0, ticking = false;
+  var nav = $("#nav"), menuBtn = $(".menu-btn");
+  function onScroll() {
+    var y = window.scrollY;
+    bar.classList.toggle("solid", y > 40);
+    var menuOpen = nav.classList.contains("open");
+    bar.classList.toggle("hide", y > lastY && y > 240 && !menuOpen);
+    lastY = y;
+    if (!reduce) { var p = $("#pbg"); if (p) { var r = p.parentNode.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) p.style.transform = "translate3d(0," + (r.top * -0.15) + "px,0)"; } }
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  onScroll();
+
+  /* Mobile menu */
+  menuBtn.addEventListener("click", function () {
+    var open = nav.classList.toggle("open");
+    menuBtn.setAttribute("aria-expanded", open);
+    menuBtn.setAttribute("aria-label", open ? "Close main menu" : "Open main menu");
+    bar.classList.add("solid");
+  });
+  $$("nav a").forEach(function (a) { a.addEventListener("click", function () { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); }); });
+
+  /* Scroll reveal + count-up */
+  function countUp(el) {
+    var end = +el.dataset.count, t0 = null, dur = 1400;
+    if (reduce) { el.textContent = end; return; }
+    (function step(t) { if (!t0) t0 = t; var k = Math.min((t - t0) / dur, 1); el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); })(performance.now());
+  }
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.add("in");
+        $$("[data-count]", e.target).forEach(countUp);
+        io.unobserve(e.target);
+      });
+    }, { threshold: .15 });
+    $$(".reveal").forEach(function (el) { io.observe(el); });
+  } else {
+    $$(".reveal").forEach(function (el) { el.classList.add("in"); });
+    $$("[data-count]").forEach(countUp);
+  }
+
+  /* Active nav link */
+  var links = $$("nav a");
+  if ("IntersectionObserver" in window) {
+    var so = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) links.forEach(function (a) { a.classList.toggle("active", a.getAttribute("href") === "#" + e.target.id); });
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    $$("main section[id]").forEach(function (s) { so.observe(s); });
+  }
+
+  /* Services: hover (desktop) or tap to preview */
+  var btns = $$(".svc-btn"), layers = $$(".layer"), prev = $("#svc-preview"), stitle = $("#svc-title");
+  var canHover = window.matchMedia("(hover: hover) and (min-width: 861px)").matches;
+  function showSvc(i, openPanel) {
+    btns.forEach(function (b, k) { b.setAttribute("aria-expanded", k === i); });
+    layers.forEach(function (l, k) { l.classList.toggle("on", k === i); });
+    stitle.textContent = btns[i].dataset.title;
+    if (openPanel) prev.classList.add("open");
+  }
+  btns.forEach(function (b, i) {
+    b.addEventListener("click", function () { showSvc(i, true); });
+    b.addEventListener("focus", function () { showSvc(i, false); });
+    if (canHover) b.addEventListener("mouseenter", function () { showSvc(i, false); });
+  });
+  $(".svc-close").addEventListener("click", function () { prev.classList.remove("open"); });
+
+  /* Gallery arrows */
+  var track = $("#track");
+  function step() { var c = $(".card", track); return c ? c.getBoundingClientRect().width + 19 : 300; }
+  $("#next").addEventListener("click", function () { track.scrollBy({ left: step(), behavior: reduce ? "auto" : "smooth" }); });
+  $("#prev").addEventListener("click", function () { track.scrollBy({ left: -step(), behavior: reduce ? "auto" : "smooth" }); });
+
+  /* Testimonials: auto-advance with progress bar, pause on hover/focus */
+  var box = $("#reviews"), slides = $$(".slide", box), dots = $$(".dots button", box), cur = 0, timer, ms = 6000;
+  box.style.setProperty("--slide-ms", ms + "ms");
+  function go(n) {
+    cur = (n + slides.length) % slides.length;
+    slides.forEach(function (s, i) { s.classList.toggle("on", i === cur); });
+    dots.forEach(function (d, i) { d.classList.remove("on"); void d.offsetWidth; d.classList.toggle("on", i === cur); });
+  }
+  function play() { if (reduce) return; clearInterval(timer); timer = setInterval(function () { go(cur + 1); }, ms); box.classList.remove("paused"); }
+  function pause() { clearInterval(timer); box.classList.add("paused"); }
+  dots.forEach(function (d, i) { d.addEventListener("click", function () { go(i); play(); }); });
+  box.addEventListener("mouseenter", pause); box.addEventListener("mouseleave", function () { go(cur); play(); });
+  box.addEventListener("focusin", pause); box.addEventListener("focusout", play);
+  if (reduce) box.classList.add("paused"); else play();
+
+  /* FAQ accordion (one open at a time) */
+  var qs = $$(".q");
+  qs.forEach(function (q) {
+    q.addEventListener("click", function () {
+      var open = q.getAttribute("aria-expanded") === "true";
+      qs.forEach(function (o) { o.setAttribute("aria-expanded", "false"); });
+      q.setAttribute("aria-expanded", String(!open));
+    });
+  });
+})();
+</script>
+</body>
+</html>
