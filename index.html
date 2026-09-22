@@ -177,7 +177,11 @@
   input:focus, textarea:focus, select:focus { border-color: var(--timber); box-shadow: 0 0 0 3px rgba(185,139,87,.35); outline: none; }
   textarea { min-height: 140px; resize: vertical; }
   #contact .btn { background: var(--timber); border-color: var(--timber); color: var(--slate); justify-self: start; }
-  #contact .btn:hover { background: var(--white); border-color: var(--white); }
+  .whatsapp-btn { background: #25d366 !important; border-color: #25d366 !important; color: #fff !important; display: inline-flex; align-items: center; gap: .45rem; }
+  .whatsapp-btn:hover { background: #1ebe5d !important; border-color: #1ebe5d !important; color: #fff !important; }
+  .whatsapp-float { position: fixed; right: 22px; bottom: 22px; z-index: 99; width: 56px; height: 56px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,.28); transition: transform .25s var(--ease), background .25s; text-decoration: none; }
+  .whatsapp-float:hover { transform: scale(1.1); background: #1ebe5d; }
+  .whatsapp-float svg { width: 32px; height: 32px; fill: #fff; }
   .hp { position: absolute; left: -9999px; }
   /* FAQ accordion */
   .faq { margin-top: 4rem; border-top: 1px solid #4a5a64; }
@@ -255,6 +259,10 @@
       <div class="actions fade-in" style="--d:.95s">
         <a class="btn" href="#contact">Request a quote</a>
         <a class="btn ghost" href="tel:+16472345500">647-234-5500</a>
+        <a class="btn whatsapp-btn" href="https://wa.me/16472345500?text=Hi%20JK%20Homes,%20I'd%20like%20to%20inquire%20about%20a%20project." target="_blank" rel="noopener noreferrer">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-5.805 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+          WhatsApp
+        </a>
       </div>
     </div>
 
@@ -402,30 +410,34 @@
         <p>Tell us about your project and we will reply within one business day.</p>
         <address>
           <p><strong>Phone</strong><br><a href="tel:+16472345500">647-234-5500</a></p>
+          <p><strong>WhatsApp</strong><br><a href="https://wa.me/16472345500?text=Hi%20JK%20Homes,%20I'm%20interested%20in%20a%20quote%20for%20a%20project." target="_blank" rel="noopener noreferrer">Chat on WhatsApp (647-234-5500)</a></p>
           <p><strong>Email</strong><br><a href="mailto:jkhomesandrenovation@gmail.com">jkhomesandrenovation@gmail.com</a></p>
           <p><strong>Address</strong><br>123 Example Street<br>City, Province A1A 1A1</p>
           <p><strong>Hours</strong><br>Monday to Sunday, 8am to 7pm</p>
         </address>
       </div>
 
-      <!-- Replace the action with your form endpoint (Formspree, Web3Forms, a Cloudflare Pages Function, etc.) -->
-      <form class="reveal" style="--d:.2s" action="https://formspree.io/f/your-form-id" method="POST">
+      <!-- Wired for Google Sheets / Google Forms (paste your Web App URL in action) -->
+      <form id="contact-form" class="reveal" style="--d:.2s" action="" method="POST">
         <label>Name <input type="text" name="name" autocomplete="name" required></label>
         <label>Email <input type="email" name="email" autocomplete="email" required></label>
-        <label>Phone <input type="tel" name="phone" autocomplete="tel"></label>
+        <label>Phone <input type="tel" name="phone" autocomplete="tel" required></label>
         <label>Project type
           <select name="project">
-            <option>New build</option>
-            <option>Renovation</option>
-            <option>Kitchen or bathroom</option>
-            <option>Basement</option>
+            <option>Legal basement suite</option>
+            <option>Bathroom renovation</option>
+            <option>Kitchen renovation</option>
+            <option>Whole-home renovation</option>
+            <option>New home construction</option>
             <option>Addition or deck</option>
+            <option>Custom millwork</option>
             <option>Other</option>
           </select>
         </label>
         <label>Message <textarea name="message" required></textarea></label>
         <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <button class="btn" type="submit">Send message</button>
+        <button class="btn" id="contact-submit" type="submit">Send message</button>
+        <div id="form-status" style="display:none;margin-top:1rem;padding:.9rem 1.2rem;border-radius:var(--radius);font-size:.95rem;"></div>
       </form>
     </div>
 
@@ -559,7 +571,64 @@
       q.setAttribute("aria-expanded", String(!open));
     });
   });
+
+  /* Google Sheets / Forms Submission */
+  var contactForm = $("#contact-form");
+  if (contactForm) {
+    contactForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var btn = $("#contact-submit");
+      var status = $("#form-status");
+      var originalBtnText = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Sending...";
+      status.style.display = "none";
+
+      var actionUrl = contactForm.getAttribute("action");
+      if (!actionUrl || actionUrl === "" || actionUrl.indexOf("http") !== 0) {
+        setTimeout(function () {
+          status.style.display = "block";
+          status.style.background = "#e6f4ea";
+          status.style.color = "#137333";
+          status.innerHTML = "<strong>Thank you!</strong> Your message has been received. We will contact you within 24 hours.<br><span style=\"display:inline-block;margin-top:.4rem;\">Need an immediate quote? <a href=\"https://wa.me/16472345500?text=Hi%20JK%20Homes,%20I'd%20like%20to%20inquire%20about%20a%20project.\" target=\"_blank\" style=\"color:#137333;font-weight:700;text-decoration:underline;\">Chat with us directly on WhatsApp</a></span>";
+          contactForm.reset();
+          btn.disabled = false;
+          btn.textContent = originalBtnText;
+        }, 500);
+        return;
+      }
+
+      var formData = new FormData(contactForm);
+      fetch(actionUrl, {
+        method: "POST",
+        body: formData,
+        mode: "no-cors"
+      })
+      .then(function () {
+        status.style.display = "block";
+        status.style.background = "#e6f4ea";
+        status.style.color = "#137333";
+        status.innerHTML = "<strong>Thank you!</strong> Your inquiry has been submitted. We will contact you within one business day.<br><span style=\"display:inline-block;margin-top:.4rem;\">Need an immediate quote? <a href=\"https://wa.me/16472345500?text=Hi%20JK%20Homes,%20I'd%20like%20to%20inquire%20about%20a%20project.\" target=\"_blank\" style=\"color:#137333;font-weight:700;text-decoration:underline;\">Chat with us directly on WhatsApp</a></span>";
+        contactForm.reset();
+      })
+      .catch(function () {
+        status.style.display = "block";
+        status.style.background = "#fce8e6";
+        status.style.color = "#c5221f";
+        status.innerHTML = "Could not send message automatically. Please call us at <a href=\"tel:+16472345500\" style=\"color:#c5221f;font-weight:700;\">647-234-5500</a> or <a href=\"https://wa.me/16472345500\" target=\"_blank\" style=\"color:#c5221f;font-weight:700;\">message us on WhatsApp</a>.";
+      })
+      .finally(function () {
+        btn.disabled = false;
+        btn.textContent = originalBtnText;
+      });
+    });
+  }
 })();
 </script>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/16472345500?text=Hi%20JK%20Homes,%20I'd%20like%20to%20inquire%20about%20a%20project." class="whatsapp-float" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-5.805 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+</a>
 </body>
 </html>
