@@ -1,0 +1,4 @@
+   User-agent: *
+   Allow: /
+
+   Sitemap: https://jasscanadawebsite.gupshupdeepak.workers.dev/sitemap.xml
