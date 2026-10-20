@@ -22,7 +22,7 @@
 <meta name="twitter:description" content="JK Homes &amp; Renovation: home renovation and construction in Toronto &amp; the GTA, from kitchens and bathrooms to legal basement suites, additions and millwork.">
 <meta name="twitter:image" content="https://jasscanadawebsite.gupshupdeepak.workers.dev/image1.jpeg">
 <meta name="twitter:image:alt" content="Legal basement suite project by JK Homes &amp; Renovation">
-<!-- Structured data (only facts that appear on this page). TODO: when a real street address exists, add "address" (PostalAddress) to the business below. -->
+<!-- Structured data -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -50,6 +50,7 @@
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=Manrope:wght@400;500;700&display=swap"></noscript>
 <script>document.documentElement.classList.add("js");</script>
 <style>
+  /* ---------- FLAT DESIGN SYSTEM ---------- */
   :root {
     --lake: #1d4e5f;
     --deep: #143743;
@@ -58,7 +59,9 @@
     --mist: #dce4e6;
     --paper: #f7f8f6;
     --white: #ffffff;
-    --radius: 6px;
+    --ink: #11181d;
+    --radius: 0px;          /* flat: no rounded corners */
+    --line: 2px solid var(--slate);
     --max: 1120px;
     --ease: cubic-bezier(.2, .7, .2, 1);
     --head: "Bricolage Grotesque", Georgia, "Times New Roman", serif;
@@ -78,170 +81,133 @@
   p { margin: 0 0 1em; max-width: 62ch; }
   .wrap { width: min(100% - 2.5rem, var(--max)); margin-inline: auto; }
   .section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
-  .btn { display: inline-block; padding: .85em 1.6em; border-radius: var(--radius); font-weight: 700; text-decoration: none; border: 2px solid var(--lake); background: var(--lake); color: var(--white); cursor: pointer; transition: background .25s, color .25s, border-color .25s, transform .25s var(--ease); }
-  .btn:hover { background: var(--slate); border-color: var(--slate); transform: translateY(-2px); }
+
+  /* Flat buttons: solid fill, hard 2px border, no lift, no shadow */
+  .btn { display: inline-block; padding: .85em 1.6em; border-radius: var(--radius); font-weight: 700; text-decoration: none; border: 2px solid var(--lake); background: var(--lake); color: var(--white); cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+  .btn:hover { background: var(--slate); border-color: var(--slate); color: var(--white); }
   .btn.ghost { background: transparent; color: var(--lake); }
   .btn.ghost:hover { background: var(--lake); color: var(--white); border-color: var(--lake); }
 
-  /* ---------- Scroll reveal ---------- */
-  .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease), transform .8s var(--ease); transition-delay: var(--d, 0s); }
-  .js .reveal.in { opacity: 1; transform: none; }
+  /* ---------- Scroll reveal (flat: opacity only, no translate) ---------- */
+  .js .reveal { opacity: 0; transition: opacity .6s linear; transition-delay: var(--d, 0s); }
+  .js .reveal.in { opacity: 1; }
 
-  /* ---------- Header: transparent on hero, solid after scroll, hides on scroll down ---------- */
-  header.site { position: fixed; inset: 0 0 auto 0; z-index: 20; transition: background .3s, transform .4s var(--ease), box-shadow .3s; color: var(--white); }
-  header.site.solid { background: var(--paper); color: var(--slate); box-shadow: 0 1px 0 var(--mist); }
+  /* ---------- Header ---------- */
+  header.site { position: fixed; inset: 0 0 auto 0; z-index: 20; transition: background .2s, transform .3s var(--ease); color: var(--white); border-bottom: 2px solid transparent; }
+  header.site.solid { background: var(--paper); color: var(--slate); border-bottom: 2px solid var(--slate); }
   header.site.hide { transform: translateY(-100%); }
   header.site .wrap { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 68px; }
   .brand { font-family: var(--head); font-weight: 700; font-size: 1.35rem; color: inherit; text-decoration: none; }
   nav ul { display: flex; gap: 1.6rem; list-style: none; margin: 0; padding: 0; }
-  nav a { color: inherit; text-decoration: none; font-weight: 500; background: linear-gradient(currentColor, currentColor) 0 100% / 0 2px no-repeat; padding-bottom: 3px; transition: background-size .35s var(--ease); }
-  nav a:hover, nav a.active { background-size: 100% 2px; }
+  nav a { color: inherit; text-decoration: none; font-weight: 500; border-bottom: 2px solid transparent; padding-bottom: 3px; transition: border-color .15s; }
+  nav a:hover, nav a.active { border-bottom-color: var(--timber); }
   .menu-btn { display: none; background: none; border: 0; cursor: pointer; padding: .5rem; }
-  .menu-btn span { display: block; width: 24px; height: 2px; background: currentColor; margin: 5px 0; transition: transform .3s var(--ease), opacity .3s; }
+  .menu-btn span { display: block; width: 24px; height: 2px; background: currentColor; margin: 5px 0; transition: transform .2s, opacity .2s; }
   .menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
   .menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
   .menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-  /* ---------- Hero ---------- */
-  #hero { position: relative; min-height: 100svh; background: var(--deep); color: var(--white); display: flex; align-items: center; overflow: hidden; padding: 7rem 0 4rem; }
-  /* Background layer. To use a real looping video, add a <video class="bg-media" autoplay muted loop playsinline src="videos/hero.mp4"></video> inside .hero-bg */
-  .hero-bg { position: absolute; inset: 0; }
-  .hero-bg::before { content: ""; position: absolute; inset: -8%; background: radial-gradient(60% 50% at 75% 30%, #2c6b80 0%, transparent 70%), radial-gradient(50% 50% at 15% 85%, #0f2c37 0%, transparent 70%), var(--deep); animation: drift 22s ease-in-out infinite alternate; }
-  .bg-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .55; }
-  .hero-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,55,67,.85), rgba(20,55,67,.25)); }
-  @keyframes drift { from { transform: scale(1) translate3d(0, 0, 0); } to { transform: scale(1.14) translate3d(-3%, 2%, 0); } }
+  /* ---------- Hero: FLAT solid block, no gradients ---------- */
+  #hero { position: relative; min-height: 100svh; background: var(--deep); color: var(--white); display: flex; align-items: center; overflow: hidden; padding: 7rem 0 4rem; border-bottom: 2px solid var(--slate); }
+  .hero-bg { position: absolute; inset: 0; background: var(--deep); }
+  .hero-bg::before, .hero-bg::after { content: none; }  /* removed gradient layers */
+  .bg-media { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; }
   #hero .grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr .95fr; gap: 2.5rem; align-items: center; }
   .line { display: block; overflow: hidden; padding-bottom: .08em; }
-  .line > span { display: block; animation: rise 1s var(--ease) both; animation-delay: calc(.15s * var(--i)); }
-  @keyframes rise { from { transform: translateY(110%); } to { transform: none; } }
-  .fade-in { animation: fade 1s var(--ease) both; animation-delay: var(--d, .6s); }
-  @keyframes fade { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .line > span { display: block; }
   .eyebrow { display: block; font-family: var(--body); font-size: .95rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--timber); margin-bottom: 1.1rem; }
   #hero p.lead { font-size: 1.2rem; color: #d7e6ea; }
   .badges { display: flex; gap: 1.4rem; flex-wrap: wrap; margin: 0 0 1.6rem; padding: 0; list-style: none; font-weight: 700; font-size: .95rem; }
-  .badges li::before { content: ""; display: inline-block; width: .55em; height: .55em; margin-right: .5em; border-radius: 50%; background: var(--timber); }
+  .badges li::before { content: ""; display: inline-block; width: .55em; height: .55em; margin-right: .5em; background: var(--timber); }  /* square dot, flat */
   .actions { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1.6rem; }
   #hero .btn { background: var(--timber); border-color: var(--timber); color: var(--slate); }
-  #hero .btn:hover { background: var(--white); border-color: var(--white); }
+  #hero .btn:hover { background: var(--white); border-color: var(--white); color: var(--slate); }
   #hero .btn.ghost { background: transparent; color: var(--white); border-color: var(--white); }
   #hero .btn.ghost:hover { background: var(--white); color: var(--lake); }
-  /* House line drawing that draws itself on load */
-  .elevation { width: 100%; height: auto; }
-  .elevation .draw > * { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.6s var(--ease) forwards; animation-delay: calc(.9s + .07s * var(--n, 0)); }
-  @keyframes draw { to { stroke-dashoffset: 0; } }
-  .scroll-cue { position: absolute; z-index: 1; left: 50%; bottom: 1.4rem; width: 22px; height: 36px; border: 2px solid rgba(255,255,255,.6); border-radius: 12px; transform: translateX(-50%); }
-  .scroll-cue::after { content: ""; position: absolute; left: 50%; top: 6px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: var(--white); animation: cue 1.8s ease-in-out infinite; }
-  @keyframes cue { 0% { opacity: 0; transform: translateY(0); } 30% { opacity: 1; } 100% { opacity: 0; transform: translateY(12px); } }
 
-  /* ---------- Intro strip ---------- */
+  /* House line drawing: flat line art, no gradient stroke */
+  .elevation { width: 100%; height: auto; }
+  .elevation .draw > * { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw 1.4s linear forwards; animation-delay: calc(.6s + .06s * var(--n, 0)); }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  .scroll-cue { position: absolute; z-index: 1; left: 50%; bottom: 1.4rem; width: 22px; height: 36px; border: 2px solid rgba(255,255,255,.6); transform: translateX(-50%); }
+  .scroll-cue::after { content: none; }  /* removed animated gradient dot */
+
+  /* ---------- Intro ---------- */
   #intro { padding: clamp(3rem, 6vw, 5rem) 0; }
   #intro h2 { max-width: 20ch; }
 
-  /* ---------- Services: hover/click list with preview panel ---------- */
-  #services { background: var(--white); }
+  /* ---------- Services ---------- */
+  #services { background: var(--white); border-top: 2px solid var(--slate); border-bottom: 2px solid var(--slate); }
   .svc { display: grid; grid-template-columns: 1.1fr .9fr; gap: 3rem; align-items: start; margin-top: 2rem; }
   .svc-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--slate); }
-  .svc-btn { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--mist); padding: 1.3rem 0; cursor: pointer; display: grid; gap: .2rem; position: relative; transition: padding-left .4s var(--ease), color .3s; }
-  .svc-btn h3 { margin: 0; transition: color .3s; }
+  .svc-btn { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid var(--mist); padding: 1.3rem 0; cursor: pointer; display: grid; gap: .2rem; position: relative; transition: padding-left .2s; }
+  .svc-btn h3 { margin: 0; transition: color .15s; }
   .svc-btn span { color: #55656e; }
-  .svc-btn::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 3px; width: 0; background: var(--timber); transition: width .5s var(--ease); }
+  .svc-btn::after { content: ""; position: absolute; left: 0; bottom: -1px; height: 3px; width: 0; background: var(--timber); transition: width .2s linear; }
   .svc-btn[aria-expanded="true"] { padding-left: 1.1rem; }
   .svc-btn[aria-expanded="true"] h3 { color: var(--lake); }
   .svc-btn[aria-expanded="true"]::after { width: 100%; }
-  .svc-preview { position: sticky; top: 92px; border-radius: var(--radius); overflow: hidden; background: var(--mist); aspect-ratio: 4 / 5; }
-  .svc-preview .layer { position: absolute; inset: 0; clip-path: inset(100% 0 0 0); transition: clip-path .7s var(--ease); }
-  .svc-preview .layer.on { clip-path: inset(0); }
+  .svc-preview { position: sticky; top: 92px; overflow: hidden; background: var(--mist); aspect-ratio: 4 / 5; border: 2px solid var(--slate); }
+  .svc-preview .layer { position: absolute; inset: 0; opacity: 0; transition: opacity .3s linear; pointer-events: none; }
+  .svc-preview .layer.on { opacity: 1; }
   .svc-preview .layer img { width: 100%; height: 100%; object-fit: cover; }
-  .svc-foot { position: absolute; left: 0; right: 0; bottom: 0; padding: 1rem 1.2rem; background: rgba(38,50,58,.88); color: var(--white); display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+  .svc-foot { position: absolute; left: 0; right: 0; bottom: 0; padding: 1rem 1.2rem; background: var(--slate); color: var(--white); display: flex; justify-content: space-between; gap: 1rem; align-items: center; border-top: 2px solid var(--slate); }
   .svc-foot a { color: var(--white); font-weight: 700; }
-  .svc-close { display: none; position: absolute; top: .7rem; right: .7rem; background: var(--white); border: 0; border-radius: var(--radius); padding: .4rem .8rem; cursor: pointer; font-weight: 700; z-index: 2; }
+  .svc-close { display: none; position: absolute; top: .7rem; right: .7rem; background: var(--white); border: 2px solid var(--slate); padding: .4rem .8rem; cursor: pointer; font-weight: 700; z-index: 2; }
 
-  /* Placeholder tones: delete these once you use real <img> tags */
-  .ph { width: 100%; height: 100%; }
-  .ph.a { background: linear-gradient(160deg, #9db7bf, #1d4e5f); }
-  .ph.b { background: linear-gradient(160deg, #e2cba8, #b98b57); }
-  .ph.c { background: linear-gradient(160deg, #c9d3d6, #5f7a85); }
-  .ph.d { background: linear-gradient(160deg, #8fa9a0, #2f5a4e); }
-  .ph.e { background: linear-gradient(160deg, #d8d2c6, #8a7d68); }
-  .ph.f { background: linear-gradient(160deg, #b5c4cb, #26323a); }
-
-  /* ---------- Gallery: horizontal snap track ---------- */
+  /* ---------- Gallery ---------- */
   .gal-head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; flex-wrap: wrap; }
   .arrows { display: flex; gap: .6rem; margin-bottom: 1rem; }
-  .arrows button { width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--lake); background: transparent; cursor: pointer; font-size: 1.2rem; color: var(--lake); transition: background .25s, color .25s; }
+  .arrows button { width: 48px; height: 48px; border: 2px solid var(--lake); background: transparent; cursor: pointer; font-size: 1.2rem; color: var(--lake); transition: background .15s, color .15s; }
   .arrows button:hover { background: var(--lake); color: var(--white); }
   .track { display: flex; gap: 1.2rem; overflow-x: auto; scroll-snap-type: x mandatory; padding: 1rem max(1.25rem, calc((100vw - var(--max)) / 2)); scrollbar-width: thin; }
-  .card { flex: 0 0 min(78vw, 420px); scroll-snap-align: start; margin: 0; position: relative; border-radius: var(--radius); overflow: hidden; aspect-ratio: 4 / 5; background: var(--mist); }
-  .card > .ph, .card > img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
-  .card:hover > .ph, .card:hover > img { transform: scale(1.07); }
-  .card figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.2rem; color: var(--white); background: linear-gradient(transparent, rgba(20,55,67,.92)); transform: translateY(38%); transition: transform .5s var(--ease); }
-  .card:hover figcaption, .card:focus-within figcaption { transform: none; }
-  .card figcaption small { display: block; opacity: .85; }
+  .card { flex: 0 0 min(78vw, 420px); scroll-snap-align: start; margin: 0; position: relative; overflow: hidden; aspect-ratio: 4 / 5; background: var(--mist); border: 2px solid var(--slate); }
+  .card > img { width: 100%; height: 100%; object-fit: cover; }
+  .card figcaption { position: absolute; left: 0; right: 0; bottom: 0; padding: 1.2rem; color: var(--white); background: var(--slate); border-top: 2px solid var(--timber); }
+  .card figcaption small { display: block; color: #cfdadf; }
   .card figcaption h3 { margin: 0 0 .1em; }
 
   /* ---------- About ---------- */
-  #about { background: var(--white); }
+  #about { background: var(--white); border-top: 2px solid var(--slate); }
   .two { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
   .facts { list-style: none; margin: 0; padding: 0; border-left: 4px solid var(--timber); }
   .facts li { padding: .9rem 0 .9rem 1.4rem; border-bottom: 1px solid var(--mist); }
   .facts li:last-child { border-bottom: 0; }
   .facts strong { display: block; font-family: var(--head); font-size: 1.9rem; color: var(--lake); }
-  .expertise { position: relative; margin-top: 4rem; border-radius: var(--radius); overflow: hidden; color: var(--white); min-height: 380px; display: grid; align-items: center; }
-  .expertise .pbg { position: absolute; inset: -15% 0; background: linear-gradient(120deg, #143743, #2c6b80 60%, #b98b57); will-change: transform; }
+  .expertise { position: relative; margin-top: 4rem; overflow: hidden; color: var(--white); min-height: 380px; display: grid; align-items: center; border: 2px solid var(--slate); }
+  .expertise .pbg { position: absolute; inset: 0; background: var(--deep); }  /* flat two-tone */
   .expertise .in { position: relative; padding: clamp(2rem, 5vw, 4rem); display: flex; gap: 2rem; align-items: center; justify-content: space-between; flex-wrap: wrap; }
   .expertise .in > div { max-width: 46ch; }
   .expertise .btn { background: var(--timber); border-color: var(--timber); color: var(--slate); }
-  .expertise .btn:hover { background: var(--white); border-color: var(--white); }
-  .seal { width: 150px; height: 150px; animation: spin 18s linear infinite; flex: none; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  /* Testimonials */
-  .reviews { margin-top: 4rem; }
-  .slides { display: grid; }
-  .slide { grid-area: 1 / 1; opacity: 0; transform: translateX(30px); transition: opacity .7s var(--ease), transform .7s var(--ease); pointer-events: none; }
-  .slide.on { opacity: 1; transform: none; pointer-events: auto; }
-  .slide blockquote { margin: 0 0 1rem; font-family: var(--head); font-size: clamp(1.25rem, 2.4vw, 1.7rem); line-height: 1.35; max-width: 42ch; }
-  .dots { display: flex; gap: .5rem; margin-top: 1.4rem; }
-  .dots button { width: 34px; height: 6px; border: 0; border-radius: 3px; background: var(--mist); cursor: pointer; padding: 0; position: relative; overflow: hidden; }
-  .dots button.on::after { content: ""; position: absolute; inset: 0; background: var(--lake); transform-origin: left; animation: fill var(--slide-ms, 6s) linear forwards; }
-  .paused .dots button.on::after { animation-play-state: paused; }
-  @keyframes fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  .expertise .btn:hover { background: var(--white); border-color: var(--white); color: var(--slate); }
+  .seal { width: 150px; height: 150px; flex: none; }  /* static, no spin */
 
   /* ---------- Contact ---------- */
-  #contact { background: var(--slate); color: var(--white); }
+  #contact { background: var(--slate); color: var(--white); border-top: 2px solid var(--slate); }
   #contact a { color: #cfe3e8; }
   #contact h2.big { font-size: clamp(2.2rem, 5.2vw, 4rem); max-width: 16ch; }
   #contact .two { grid-template-columns: .9fr 1.1fr; margin-top: 2.5rem; }
   address { font-style: normal; }
   form { display: grid; gap: 1rem; }
   label { display: grid; gap: .35rem; font-weight: 500; }
-  input, textarea, select { font: inherit; padding: .75em .9em; border-radius: var(--radius); border: 1px solid #6c7d87; background: var(--white); color: var(--slate); width: 100%; transition: border-color .25s, box-shadow .25s; }
-  input:focus, textarea:focus, select:focus { border-color: var(--timber); box-shadow: 0 0 0 3px rgba(185,139,87,.35); outline: none; }
+  input, textarea, select { font: inherit; padding: .75em .9em; border: 2px solid #6c7d87; background: var(--white); color: var(--slate); width: 100%; transition: border-color .15s; }
+  input:focus, textarea:focus, select:focus { border-color: var(--timber); outline: 3px solid var(--timber); outline-offset: 1px; }
   textarea { min-height: 140px; resize: vertical; }
   #contact .btn { background: var(--timber); border-color: var(--timber); color: var(--slate); justify-self: start; }
   .whatsapp-btn { background: #25d366 !important; border-color: #25d366 !important; color: #fff !important; display: inline-flex; align-items: center; gap: .45rem; }
   .whatsapp-btn:hover { background: #1ebe5d !important; border-color: #1ebe5d !important; color: #fff !important; }
-  .whatsapp-float { position: fixed; right: 22px; bottom: 22px; z-index: 99; width: 56px; height: 56px; border-radius: 50%; background: #25d366; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(0,0,0,.28); transition: transform .25s var(--ease), background .25s; text-decoration: none; }
-  .whatsapp-float:hover { transform: scale(1.1); background: #1ebe5d; }
+  .whatsapp-float { position: fixed; right: 22px; bottom: 22px; z-index: 99; width: 56px; height: 56px; background: #25d366; display: flex; align-items: center; justify-content: center; border: 2px solid var(--slate); transition: background .15s; text-decoration: none; }
+  .whatsapp-float:hover { background: #1ebe5d; }
   .whatsapp-float svg { width: 32px; height: 32px; fill: #fff; }
   .hp { position: absolute; left: -9999px; }
-  /* FAQ accordion */
-  .faq { margin-top: 4rem; border-top: 1px solid #4a5a64; }
-  .faq h3 { margin: 0; }
-  .q { width: 100%; text-align: left; background: none; border: 0; border-bottom: 1px solid #4a5a64; padding: 1.1rem 0; cursor: pointer; display: flex; justify-content: space-between; gap: 1rem; font-family: var(--head); font-size: 1.15rem; color: var(--white); }
-  .q::after { content: "+"; font-size: 1.5rem; line-height: 1; transition: transform .4s var(--ease); }
-  .q[aria-expanded="true"]::after { transform: rotate(45deg); }
-  .a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .45s var(--ease); }
-  .a > div { overflow: hidden; }
-  .a p { padding: 1rem 0 0; color: #cfdadf; }
-  .q[aria-expanded="true"] + .a { grid-template-rows: 1fr; }
 
-  footer { padding: 1.6rem 0; font-size: .95rem; background: var(--deep); color: #c5d6db; }
+  footer { padding: 1.6rem 0; font-size: .95rem; background: var(--deep); color: #c5d6db; border-top: 2px solid var(--slate); }
 
   /* ---------- Responsive ---------- */
   @media (max-width: 860px) {
     .menu-btn { display: block; }
-    nav { position: fixed; inset: 0 0 auto 0; top: 68px; background: var(--paper); color: var(--slate); max-height: 0; overflow: hidden; transition: max-height .45s var(--ease); }
-    nav.open { max-height: 320px; box-shadow: 0 8px 20px rgba(0,0,0,.08); }
+    nav { position: fixed; inset: 0 0 auto 0; top: 68px; background: var(--paper); color: var(--slate); max-height: 0; overflow: hidden; transition: max-height .3s var(--ease); border-bottom: 2px solid var(--slate); }
+    nav.open { max-height: 320px; }
     nav ul { flex-direction: column; gap: 0; padding: .5rem 1.25rem 1rem; }
     nav li a { display: inline-block; padding: .7rem 0; }
     #hero .grid, .two, #contact .two { grid-template-columns: 1fr; }
@@ -256,9 +222,8 @@
   @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
     *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; }
-    .js .reveal { opacity: 1; transform: none; }
+    .js .reveal { opacity: 1; }
     .elevation .draw > * { stroke-dashoffset: 0; }
-    .card figcaption { transform: none; }
   }
 </style>
 </head>
@@ -289,17 +254,16 @@
   <div class="wrap grid">
     <div>
       <h1 id="hero-title">
-        <span class="eyebrow fade-in" style="--d:0s">JK Homes &amp; Renovation &middot; Toronto &amp; GTA</span>
-        <span class="line" style="--i:0"><span>Homes built to last,</span></span>
-        <span class="line" style="--i:1"><span>and to be lived in.</span></span>
+        <span class="eyebrow">JK Homes &amp; Renovation &middot; Toronto &amp; GTA</span>
+        <span class="line"><span>Homes built to last,</span></span>
+        <span class="line"><span>and to be lived in.</span></span>
       </h1>
-      <p class="lead fade-in" style="--d:.55s">Home renovation and construction in Toronto &amp; the GTA: new builds, renovations and remodels, planned and delivered by one local team.</p>
-      <!-- TODO: Confirm "5-star reviews" is accurate and can be shown publicly (add real client reviews below when available). -->
-      <ul class="badges fade-in" style="--d:.75s">
+      <p class="lead">Home renovation and construction in Toronto &amp; the GTA: new builds, renovations and remodels, planned and delivered by one local team.</p>
+      <ul class="badges">
         <li>Licensed &amp; insured</li>
         <li>5-star reviews</li>
       </ul>
-      <div class="actions fade-in" style="--d:.95s">
+      <div class="actions">
         <a class="btn" href="#contact">Request a quote</a>
         <a class="btn ghost" href="tel:+16472345500">647-234-5500</a>
         <a class="btn whatsapp-btn" href="https://wa.me/16472345500?text=Hi%20JK%20Homes,%20I'd%20like%20to%20inquire%20about%20a%20project." target="_blank" rel="noopener noreferrer">
@@ -361,7 +325,6 @@
 
       <div class="svc-preview" id="svc-preview" aria-live="polite">
         <button class="svc-close" type="button">Close</button>
-        <!-- Services preview images. TODO: these reuse the gallery photos, so they do not match every service (e.g. "New home construction" shows the basement suite photo). Replace with matching photos when available. -->
         <div class="layer on"><img src="image1.jpeg" alt="Legal basement suite project by JK Homes &amp; Renovation" loading="lazy" decoding="async"></div>
         <div class="layer"><img src="image2.jpeg" alt="Spa-style bathroom remodel by JK Homes &amp; Renovation" loading="lazy" decoding="async"></div>
         <div class="layer"><img src="image3.jpeg" alt="Custom walk-in shower in a bathroom renovation" loading="lazy" decoding="async"></div>
@@ -402,7 +365,6 @@
         <h2 id="about-title" class="reveal">About JK Homes &amp; Renovation</h2>
         <p class="reveal" style="--d:.1s">JK Homes &amp; Renovation is a construction and renovation team serving Toronto and the GTA. We take on new home construction, whole-home renovations, kitchen and bathroom renovations, basement finishing, additions and decks, and custom millwork.</p>
         <p class="reveal" style="--d:.2s">We work with homeowners, developers and businesses, and every project starts with a conversation about your goals, timeline and budget.</p>
-        <!-- TODO: Add your real story here: years in business, licensing, insurance, warranty and areas served. Only add facts you can verify. -->
       </div>
       <ul class="facts reveal" style="--d:.15s">
         <li><strong>Toronto &amp; GTA</strong>service area</li>
@@ -416,7 +378,7 @@
       <div class="in">
         <div>
           <h3>Our expertise</h3>
-          <p>One team and one point of contact, from the first call to the final walkthrough of your finished project.</p><!-- TODO: Add what sets your team apart (structural work, finish carpentry, trade management). -->
+          <p>One team and one point of contact, from the first call to the final walkthrough of your finished project.</p>
           <a class="btn" href="#contact">Request a quote</a>
         </div>
         <svg class="seal" viewBox="0 0 200 200" role="img" aria-label="Licensed and insured seal">
@@ -427,8 +389,6 @@
         </svg>
       </div>
     </div>
-
-    <!-- TODO: Add real, verifiable client reviews here (with permission). Placeholder testimonials were removed. -->
   </div>
 </section>
 
@@ -444,12 +404,10 @@
           <p><strong>WhatsApp</strong><br><a href="https://wa.me/16472345500?text=Hi%20JK%20Homes,%20I'm%20interested%20in%20a%20quote%20for%20a%20project." target="_blank" rel="noopener noreferrer">Chat on WhatsApp (647-234-5500)</a></p>
           <p><strong>Email</strong><br><a href="mailto:jkhomesandrenovation@gmail.com">jkhomesandrenovation@gmail.com</a></p>
           <p><strong>Service area</strong><br>Toronto &amp; the GTA</p>
-          <!-- TODO: Add the actual business address if you want it public. -->
           <p><strong>Hours</strong><br>Monday to Sunday, 8am to 7pm</p>
         </address>
       </div>
 
-      <!-- Wired for Google Sheets / Google Forms (paste your Web App URL in action) -->
       <form id="contact-form" class="reveal" style="--d:.2s" action="https://script.google.com/macros/s/AKfycbxTXbopNkKwmiG9Wu4PyzXslumdW4OucG0THVZ-x9YxgVapVpENUG1fkosj1K9-SYcd/exec" method="POST">
         <label>Name <input type="text" name="name" autocomplete="name" required></label>
         <label>Email <input type="email" name="email" autocomplete="email" required></label>
@@ -469,11 +427,9 @@
         <label>Message <textarea name="message" required></textarea></label>
         <input class="hp" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
         <button class="btn" id="contact-submit" type="submit">Send message</button>
-        <div id="form-status" style="display:none;margin-top:1rem;padding:.9rem 1.2rem;border-radius:var(--radius);font-size:.95rem;"></div>
+        <div id="form-status" style="display:none;margin-top:1rem;padding:.9rem 1.2rem;font-size:.95rem;border:2px solid currentColor;"></div>
       </form>
     </div>
-
-    <!-- TODO: FAQ removed because it held only sample answers. Re-add real questions and answers (timelines, licensing/insurance, permits, quotes) when ready. -->
   </div>
 </section>
 
@@ -500,7 +456,6 @@
     var menuOpen = nav.classList.contains("open");
     bar.classList.toggle("hide", y > lastY && y > 240 && !menuOpen);
     lastY = y;
-    if (!reduce) { var p = $("#pbg"); if (p) { var r = p.parentNode.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) p.style.transform = "translate3d(0," + (r.top * -0.15) + "px,0)"; } }
     ticking = false;
   }
   window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
@@ -515,25 +470,18 @@
   });
   $$("nav a").forEach(function (a) { a.addEventListener("click", function () { nav.classList.remove("open"); menuBtn.setAttribute("aria-expanded", "false"); }); });
 
-  /* Scroll reveal + count-up */
-  function countUp(el) {
-    var end = +el.dataset.count, t0 = null, dur = 1400;
-    if (reduce) { el.textContent = end; return; }
-    (function step(t) { if (!t0) t0 = t; var k = Math.min((t - t0) / dur, 1); el.textContent = Math.round(end * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(step); })(performance.now());
-  }
+  /* Scroll reveal (flat: opacity only) */
   if ("IntersectionObserver" in window) {
     var io = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
         if (!e.isIntersecting) return;
         e.target.classList.add("in");
-        $$("[data-count]", e.target).forEach(countUp);
         io.unobserve(e.target);
       });
     }, { threshold: .15 });
     $$(".reveal").forEach(function (el) { io.observe(el); });
   } else {
     $$(".reveal").forEach(function (el) { el.classList.add("in"); });
-    $$("[data-count]").forEach(countUp);
   }
 
   /* Active nav link */
@@ -568,34 +516,6 @@
   function step() { var c = $(".card", track); return c ? c.getBoundingClientRect().width + 19 : 300; }
   $("#next").addEventListener("click", function () { track.scrollBy({ left: step(), behavior: reduce ? "auto" : "smooth" }); });
   $("#prev").addEventListener("click", function () { track.scrollBy({ left: -step(), behavior: reduce ? "auto" : "smooth" }); });
-
-  /* Testimonials: auto-advance with progress bar, pause on hover/focus */
-  var box = $("#reviews");
-  if (box) {
-  var slides = $$(".slide", box), dots = $$(".dots button", box), cur = 0, timer, ms = 6000;
-  box.style.setProperty("--slide-ms", ms + "ms");
-  function go(n) {
-    cur = (n + slides.length) % slides.length;
-    slides.forEach(function (s, i) { s.classList.toggle("on", i === cur); });
-    dots.forEach(function (d, i) { d.classList.remove("on"); void d.offsetWidth; d.classList.toggle("on", i === cur); });
-  }
-  function play() { if (reduce) return; clearInterval(timer); timer = setInterval(function () { go(cur + 1); }, ms); box.classList.remove("paused"); }
-  function pause() { clearInterval(timer); box.classList.add("paused"); }
-  dots.forEach(function (d, i) { d.addEventListener("click", function () { go(i); play(); }); });
-  box.addEventListener("mouseenter", pause); box.addEventListener("mouseleave", function () { go(cur); play(); });
-  box.addEventListener("focusin", pause); box.addEventListener("focusout", play);
-  if (reduce) box.classList.add("paused"); else play();
-  }
-
-  /* FAQ accordion (one open at a time) */
-  var qs = $$(".q");
-  qs.forEach(function (q) {
-    q.addEventListener("click", function () {
-      var open = q.getAttribute("aria-expanded") === "true";
-      qs.forEach(function (o) { o.setAttribute("aria-expanded", "false"); });
-      q.setAttribute("aria-expanded", String(!open));
-    });
-  });
 
   /* Google Sheets / Forms Submission */
   var contactForm = $("#contact-form");
